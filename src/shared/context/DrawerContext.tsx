@@ -8,7 +8,15 @@ import {
 
 interface IDrawerContextData {
   isDrawerOpen: boolean;
+  drawerOptions: IDrawerOptions[];
   toggleDrawerOpen: () => void;
+  setDrawerOptions: (newDrawerOptions: IDrawerOptions[]) => void;
+}
+
+interface IDrawerOptions {
+  icon: string;
+  label: string;
+  path: string;
 }
 
 interface IDrawerProviderProps {
@@ -25,13 +33,28 @@ export const DrawerProvider: React.FC<IDrawerProviderProps> = ({
   children,
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [drawerOptions, setDrawerOtions] = useState<IDrawerOptions[]>([]);
 
   const toggleDrawerOpen = useCallback(() => {
     setIsDrawerOpen((oldIsDrawerOpen) => !oldIsDrawerOpen);
   }, []);
 
+  const handleSetDrawerOptions = useCallback(
+    (newDrawerOptions: IDrawerOptions[]) => {
+      setDrawerOtions(newDrawerOptions);
+    },
+    []
+  );
+
   return (
-    <DrawerContext.Provider value={{ isDrawerOpen, toggleDrawerOpen }}>
+    <DrawerContext.Provider
+      value={{
+        isDrawerOpen,
+        toggleDrawerOpen,
+        drawerOptions,
+        setDrawerOptions: handleSetDrawerOptions,
+      }}
+    >
       {children}
     </DrawerContext.Provider>
   );
