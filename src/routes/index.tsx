@@ -1,10 +1,10 @@
-import { Button } from "@mui/material";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useDrawerContext } from "../shared/context";
 import { useEffect } from "react";
+import { Dashboard } from "../pages";
 
 export const AppRoutes = () => {
-  const { toggleDrawerOpen, setDrawerOptions } = useDrawerContext();
+  const { setDrawerOptions } = useDrawerContext();
 
   useEffect(() => {
     setDrawerOptions([
@@ -13,39 +13,11 @@ export const AppRoutes = () => {
         icon: "Home",
         path: "/pagina-inicial",
       },
-      {
-        label: "Cidades",
-        icon: "Star",
-        path: "/cidades",
-      },
     ]);
   }, []);
   return (
     <Routes>
-      <Route
-        path="/pagina-inicial"
-        element={
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleDrawerOpen}
-          >
-            Toggle Theme
-          </Button>
-        }
-      />
-      <Route
-        path="/cidades"
-        element={
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleDrawerOpen}
-          >
-            Toggle Theme
-          </Button>
-        }
-      />
+      <Route path="/pagina-inicial" element={<Dashboard />} />
 
       <Route path="*" element={<Navigate to={"/pagina-inicial"} />} />
     </Routes>
