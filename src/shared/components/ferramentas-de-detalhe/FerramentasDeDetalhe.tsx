@@ -1,5 +1,13 @@
 import { Add, ArrowBack, Delete, Save } from "@mui/icons-material";
-import { Box, Button, Divider, Paper, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Paper,
+  Skeleton,
+  useTheme,
+} from "@mui/material";
 
 interface IFerramentasDeDetalheProps {
   textoBotaoNovo?: string;
@@ -10,13 +18,18 @@ interface IFerramentasDeDetalheProps {
   mostrarBotaoSalvar?: boolean;
   mostrarBotaoSalvarEFechar?: boolean;
 
+  mostrarBotaoNovoCarregando?: boolean;
+  mostrarBotaoVoltarCarregando?: boolean;
+  mostrarBotaoApagarCarregando?: boolean;
+  mostrarBotaoSalvarCarregando?: boolean;
+  mostrarBotaoSalvarEFecharCarregando?: boolean;
+
   aoClicarEmNovo?: () => void;
   aoClicarEmVoltar?: () => void;
   aoClicarEmApagar?: () => void;
   aoClicarEmSalvar?: () => void;
   aoClicarEmSalvarEFechar?: () => void;
 }
-
 export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalheProps> = ({
   textoBotaoNovo = "Novo",
 
@@ -25,6 +38,12 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalheProps> = ({
   mostrarBotaoApagar = true,
   mostrarBotaoSalvar = true,
   mostrarBotaoSalvarEFechar = false,
+
+  mostrarBotaoNovoCarregando = false,
+  mostrarBotaoVoltarCarregando = false,
+  mostrarBotaoApagarCarregando = false,
+  mostrarBotaoSalvarCarregando = false,
+  mostrarBotaoSalvarEFecharCarregando = false,
 
   aoClicarEmNovo,
   aoClicarEmVoltar,
@@ -36,66 +55,88 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalheProps> = ({
 
   return (
     <Box
-      height={theme.spacing(5)}
       gap={1}
       marginX={1}
       padding={1}
       paddingX={2}
       display="flex"
       alignItems="center"
+      height={theme.spacing(5)}
       component={Paper}
     >
-      {mostrarBotaoSalvar && (
+      {mostrarBotaoSalvar && !mostrarBotaoSalvarCarregando && (
         <Button
-          variant="contained"
           color="primary"
           disableElevation
+          variant="contained"
+          onClick={aoClicarEmSalvar}
           startIcon={<Save />}
         >
           Salvar
         </Button>
       )}
-      {mostrarBotaoSalvarEFechar && (
+
+      {mostrarBotaoSalvarCarregando && <Skeleton width={110} height={60} />}
+
+      {mostrarBotaoSalvarEFechar && !mostrarBotaoSalvarEFecharCarregando && (
         <Button
-          variant="outlined"
           color="primary"
           disableElevation
+          variant="outlined"
+          onClick={aoClicarEmSalvarEFechar}
           startIcon={<Save />}
         >
           Salvar e voltar
         </Button>
       )}
-      {mostrarBotaoApagar && (
+
+      {mostrarBotaoSalvarEFecharCarregando && (
+        <Skeleton width={180} height={60} />
+      )}
+
+      {mostrarBotaoApagar && !mostrarBotaoApagarCarregando && (
         <Button
-          variant="outlined"
           color="primary"
           disableElevation
+          variant="outlined"
+          onClick={aoClicarEmApagar}
           startIcon={<Delete />}
         >
           Apagar
         </Button>
       )}
-      {mostrarBotaoNovo && (
+
+      {mostrarBotaoApagarCarregando && <Skeleton width={110} height={60} />}
+
+      {mostrarBotaoNovo && !mostrarBotaoNovo && (
         <Button
-          variant="outlined"
           color="primary"
           disableElevation
+          variant="outlined"
+          onClick={aoClicarEmNovo}
           startIcon={<Add />}
         >
           {textoBotaoNovo}
         </Button>
       )}
+
+      {mostrarBotaoNovoCarregando && <Skeleton width={110} height={60} />}
+
       <Divider variant="middle" orientation="vertical" />
-      {mostrarBotaoVoltar && (
+
+      {mostrarBotaoVoltar && !mostrarBotaoVoltarCarregando && (
         <Button
-          variant="outlined"
           color="primary"
           disableElevation
+          variant="outlined"
+          onClick={aoClicarEmVoltar}
           startIcon={<ArrowBack />}
         >
           Voltar
         </Button>
       )}
+
+      {mostrarBotaoVoltarCarregando && <Skeleton width={110} height={60} />}
     </Box>
   );
 };
